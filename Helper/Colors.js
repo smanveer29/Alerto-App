@@ -1,6 +1,6 @@
 const Colors=
 {
-    primary:'#006d77',
-    btn:'#003945'
+    primary:'#003945',
+    btn:'#003944'
 }
 export default Colors;

@@ -8,12 +8,12 @@ import Colors from '../../Helper/Colors';
 import SelectDropdown from 'react-native-select-dropdown';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import axios from '../Components/axios';
 
 
-const locations = ['Ludhiana', 'Ludhiana', 'Ludhiana', 'Ludhiana', 'Ludhiana', 'Ludhiana', 'Ludhiana', 'Ludhiana']
+let locations = []
 export default class HomeScreen extends Component {
     navigation = ''
-
     constructor(props) {
         super(props)
         this.state = {
@@ -21,9 +21,21 @@ export default class HomeScreen extends Component {
             location_user: null,
             pincode: '',
             isLoading: true,
-            tap: 0
+            tap: 0,
+            customLocation: '',
         }
         this.navigation = props.navigation
+        this.getLocations()
+    }
+    getLocations = async () => {
+        axios.get('/area/list')
+            .then((res) => {
+                locations = res.data.list
+            })
+            .catch((err) => {
+                alert(err.message)
+                console.log(err)
+            })
     }
     locationAddress = (data) => {
         this.setState({
@@ -52,27 +64,34 @@ export default class HomeScreen extends Component {
                         <Camera changeState={this.change} loading={this.loading} />
                     </View>
                     :
-                    <View style={{ width: '100%', height: '100%'}}>
+                    <View style={{ width: '100%', height: '100%' }}>
                         <View style={styles.barChart}>
                             {this.state.tap === 0 ?
-                                <Chart pincode={this.state.pincode} />
+                                <Chart data={this.state.pincode} type='current' />
                                 :
-                                <Chart location={this.state.location_user} />
+                                <Chart data={this.state.customLocation} type='custom' />
                             }
                         </View>
                         <View style={styles.bottomView}>
-                            <TouchableOpacity style={styles.addressView} onPress={() => this.setState({ tap: 0 })}>
-                                <Text style={{ fontSize: 17, color: '#000', fontWeight: 'bold' }}>Current Location:</Text>
-                                <Text style={{ width: '50%', fontSize: 12, color: '#000' }}>{this.state.location_user}</Text>
+                            <TouchableOpacity style={this.state.tap===0?styles.addressViewActive:styles.addressView} 
+                            onPress={() => { this.setState({ tap: 0 }) }}>
+                                <Text style={this.state.tap===0?styles.addTextActive:styles.addText}>Current Location:</Text>
+                                <Text style={{ width: '50%', fontSize: 12, color: this.state.tap===0?'#fff':'#000' }}>{this.state.location_user}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.addressView} onPress={() => this.setState({ tap: 1 })}>
+                            <TouchableOpacity style={this.state.tap===1?styles.addressViewActive:styles.addressView} >
                                 <Icon name="search" size={20} color="#000" />
                                 <SelectDropdown
                                     defaultButtonText="Search By Location"
                                     buttonTextStyle={{ fontSize: 17, fontWeight: 'bold' }}
+                                    buttonStyleAfterSelect={{backgroundColor:Colors.btn}}
                                     data={locations}
                                     onSelect={(selectedItem, index) => {
-                                        console.log(selectedItem, index)
+                                        this.setState({
+                                            customLocation: selectedItem,
+                                        })
+                                        this.setState({ tap: 1 });
+                                        <Chart />
+
                                     }}
                                     buttonTextAfterSelection={(selectedItem, index) => {
                                         // text represented after item is selected
@@ -89,7 +108,7 @@ export default class HomeScreen extends Component {
 
                         </View>
                         <View style={styles.btnView}>
-                            <Button icon="plus" contentStyle={{backgroundColor:Colors.btn}} mode="contained" onPress={() => {
+                            <Button icon="plus" contentStyle={{ backgroundColor: Colors.btn }} mode="contained" onPress={() => {
                                 const cameraShow = this.state.cameraVisible
                                 this.setState({ cameraVisible: !cameraShow })
                             }}>
@@ -110,6 +129,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         backgroundColor: Colors.primary,
+        zIndex:1
     },
     barChart: {
         flex: 1,
@@ -123,7 +143,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingBottom:30
+        paddingBottom: 30
     },
     cameraView:
     {
@@ -139,6 +159,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#eee',
         elevation: 5
     },
+    addText:{ 
+        fontSize: 17, 
+        color: '#000', 
+        fontWeight: 'bold' 
+    },
+    addTextActive:{ 
+        fontSize: 17, 
+        color: '#fff', 
+        fontWeight: 'bold' 
+    },
     addressView: {
         width: '80%',
         height: 60,
@@ -147,7 +177,21 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         borderRadius: 10,
         borderColor: Colors.btn,
-        borderWidth: 2,
-        margin: 7
+        borderWidth: 0,
+        margin: 7,
+        elevation: 10,
+        backgroundColor: '#eee'
+    },
+    addressViewActive: {
+        width: '80%',
+        height: 60,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        borderRadius: 10,
+        borderWidth: 0,
+        margin: 7,
+        elevation: 10,
+        backgroundColor: Colors.btn
     }
 })

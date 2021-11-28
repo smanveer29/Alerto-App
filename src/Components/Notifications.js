@@ -17,7 +17,7 @@ const alert_notification = ( _n_data ) =>
             },
             (created) => console.log(`createChannel returned '${created}'`) 
         );
-
+        
         PushNotification.localNotification(
             {
             /* Android Only Properties */

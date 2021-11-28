@@ -14,47 +14,55 @@ const data =
     ]
 };
 const screenWidth = Dimensions.get("window").width
-
+const chartLabels=[]
+const chartData=[]
 const chartConfig =
 {
     backgroundGradientFrom: Colors.primary,
     backgroundGradientFromOpacity: 1,
     backgroundGradientTo: Colors.primary,
     backgroundGradientToOpacity: 1,
-    color: (opacity = 1) => `rgba(256,256,256, ${opacity})`,
+    color: (opacity = 1) => `rgba(255,255,255, ${opacity})`,
     strokeWidth: 3, // optional, default 3
     barPercentage: 0.6,
     useShadowColorFromDataset: false// optional
 };
 export default class Chart extends Component {
-
     props = null
     constructor(props) {
         super(props)
         this.props = props
-        this.state = {
-            location: '',
-            pincode: ''
-        }
         this.getData()
     }
-    updateData = () => {
-        this.setState({
-            location: this.props.location_user,
-            pincode: this.props.pincode
-        })
-    }
     getData = async () => {
-        const location = this.state.location
-        const pincode = this.state.pincode
-        let data = {
-
+        if(this.props.type==='current')
+        {
+            const location = this.props.data
+            let param = {
+                pincode:location
+            }
+                await axios.post('/area/bar-chart', param)
+                .then((res) => 
+                {
+                    console.log(res.data)
+    
+                })
+                .catch((err) => console.log(err))
+            
         }
-        axios.post('/api/area/bar-chart', data)
-            .then((res) => {
-
-            })
-            .catch((err) => console.log(err))
+        else{
+            const location = this.props.data
+            let param = {
+                location:location
+            }
+                await axios.post('/area/bar-chart', param)
+                .then((res) => 
+                {
+                    console.log(res.data)
+    
+                })
+                .catch((err) => console.log(err))
+        }
     }
     render() {
         return (

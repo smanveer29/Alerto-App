@@ -45,7 +45,7 @@ export default class App extends Component {
         <StatusBar
           backgroundColor="transparent"
           translucent={true}
-          barStyle='dark-content'
+          barStyle='light-content'
           animated={true}
         />
         <Stack.Navigator screenOptions={{
