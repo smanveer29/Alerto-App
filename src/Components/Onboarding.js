@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import HomeScreen from '../Screens/HomeScreen';
 import Slides from './Slides';
-
+import EncryptedStorage from 'react-native-encrypted-storage';
 export default class Onboarding extends Component {
 
     constructor(props) {
@@ -25,8 +25,13 @@ export default class Onboarding extends Component {
         );
     }
 
-    _onDone = () => 
+    _onDone = async() => 
     {
+        let data=
+        {
+            onBoarding:false
+        }
+        await EncryptedStorage.setItem('load',JSON.stringify(data))
         this.setState({ showRealApp: true });
     }
 

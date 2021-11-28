@@ -1,15 +1,12 @@
 import axios from "./axios";
-
-export default getRequest=(endUrl,onSuccess,onError)=>{
+export default getRequest=(endUrl,onSuccess,onError,setLoading)=>
+{
     axios.get(endUrl)
     .then((res)=>{
-        let status = res.data.status
-        if(status){
-            onSuccess
-        }
-        else{
-            onError
-        }
+        const status = res.data.status
+        if(status) onSuccess && onSuccess(res)
+        else onError && onError(res.data.error)
     })
     .catch((err)=>console.log(err))
+    .then(()=>setLoading && setLoading(false))
 }

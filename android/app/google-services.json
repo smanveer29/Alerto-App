@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "81436355068",
+    "project_id": "alerto-c0763",
+    "storage_bucket": "alerto-c0763.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81436355068:android:d5ff2f2279cdc0bbaf2a79",
+        "android_client_info": {
+          "package_name": "com.alerto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81436355068-h1fk3htr5huemgbv75a811c7qptmd076.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlvK27xOeaFs7UDrBD-ixhhlTHfz3c51A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81436355068-h1fk3htr5huemgbv75a811c7qptmd076.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
