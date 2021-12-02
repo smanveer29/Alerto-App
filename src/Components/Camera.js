@@ -19,7 +19,7 @@ export default class Camera extends PureComponent {
   title = ''
   props = null
   navigation = ''
-  url = 'http://192.168.1.5:8000/api/records/insert'
+  url = 'http://192.168.1.40:8000/api/records/insert'
   constructor(props) {
     super(props)
     this.props = props

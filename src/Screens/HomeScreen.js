@@ -55,10 +55,11 @@ export default class HomeScreen extends Component {
 
         return (
             <SafeAreaView style={styles.cont}>
-                {
-                    this.state.isLoading && <Loading type='loading' />
-                }
                 <LearnPermission locationChangedParent={this.locationAddress} />
+                {
+                    this.state.isLoading ? <Loading type='loading'/>
+                    :
+                    <>
                 {this.state.cameraVisible ?
                     <View style={styles.cameraView}>
                         <Camera changeState={this.change} loading={this.loading} />
@@ -79,11 +80,22 @@ export default class HomeScreen extends Component {
                                 <Text style={{ width: '50%', fontSize: 12, color: this.state.tap===0?'#fff':'#000' }}>{this.state.location_user}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={this.state.tap===1?styles.addressViewActive:styles.addressView} >
-                                <Icon name="search" size={20} color="#000" />
+                                {this.state.tap===0&&<Icon name="search" size={20} color="#000"/>}
                                 <SelectDropdown
                                     defaultButtonText="Search By Location"
-                                    buttonTextStyle={{ fontSize: 17, fontWeight: 'bold' }}
-                                    buttonStyleAfterSelect={{backgroundColor:Colors.btn}}
+                                    buttonTextStyle={
+                                        this.state.tap===0?
+                                        { fontSize: 17, fontWeight: 'bold' }
+                                        :
+                                        { fontSize: 17, fontWeight: 'bold',color:'white' }
+                                        }
+                                    buttonStyle={
+                                        this.state.tap===0?
+                                        {backgroundColor:'#eee'}
+                                        :
+                                        {backgroundColor:Colors.btn}
+                                        }
+                                    buttonTextAfterSelection={{fontSize: 17, fontWeight: 'bold',color:'white' }}
                                     data={locations}
                                     onSelect={(selectedItem, index) => {
                                         this.setState({
@@ -117,6 +129,8 @@ export default class HomeScreen extends Component {
                         </View>
                     </View>
                 }
+                </>
+                }
             </SafeAreaView>
         )
     }
@@ -129,7 +143,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         backgroundColor: Colors.primary,
-        zIndex:1
+        zIndex:-1
     },
     barChart: {
         flex: 1,
@@ -171,7 +185,7 @@ const styles = StyleSheet.create({
     },
     addressView: {
         width: '80%',
-        height: 60,
+        height: 70,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
@@ -184,7 +198,7 @@ const styles = StyleSheet.create({
     },
     addressViewActive: {
         width: '80%',
-        height: 60,
+        height: 70,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',

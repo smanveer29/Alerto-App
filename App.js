@@ -18,13 +18,14 @@ const setTopLevelNavigator = (_router_el) => {
 PushNotification.configure({
   onNotification: function (notification) {
     const { data } = notification
+    console.log(data)
     if (myrouter) 
     {
-      myrouter.navigate("Notify")
+      myrouter.navigate("Notify",{data:data})
     } else {
       setTimeout(() => {
         if (myrouter) {
-          myrouter.navigate("Home")
+          myrouter.navigate("Home",{data:data})
         }
       }, 1000)
     }
@@ -33,7 +34,6 @@ PushNotification.configure({
 
 
 export default class App extends Component {
-
 
   constructor(props) {
     super(props)
