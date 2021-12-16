@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import axios from 'axios'
+import axios from './axios'
 import LearnPermission from '../Screens/LearnPermission'
 import SelectDropdown from 'react-native-select-dropdown';
 import messaging from '@react-native-firebase/messaging';
@@ -19,7 +19,7 @@ export default class Camera extends PureComponent {
   title = ''
   props = null
   navigation = ''
-  url = 'http://192.168.1.40:8000/api/records/insert'
+  url = '/records/insert'
   constructor(props) {
     super(props)
     this.props = props
@@ -29,6 +29,7 @@ export default class Camera extends PureComponent {
       count: 0,
       isUploadModal: false
     }
+    
   }
   takePicture = () => {
     this.captureImage()
@@ -173,7 +174,6 @@ export default class Camera extends PureComponent {
           </TouchableOpacity>
           <TouchableOpacity style={styles.capture} onPress={() => {
             this.setState({ isUploadModal: true })
-            messaging().unsubscribeFromTopic('myTopic')
           }}>
             {
               this.state.count == 0 ?

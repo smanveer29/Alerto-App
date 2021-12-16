@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, TouchableOpacity, TouchableWithoutFeedbackBase, ActivityIndicator, SafeAreaView } from 'react-native'
+import { Text, StyleSheet, View, TouchableOpacity, TouchableWithoutFeedbackBase, ActivityIndicator } from 'react-native'
 import Camera from '../Components/Camera'
 import LearnPermission from './LearnPermission';
 import Loading from '../Components/Loading';
@@ -9,6 +9,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from '../Components/axios';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 let locations = []

@@ -51,7 +51,6 @@ export default class Chart extends Component {
         }
         datachart.labels = location
         datachart.datasets[0].data = dataset
-
         this.setState({ isLoading: false })
     }
     getData = async () => {
@@ -61,19 +60,19 @@ export default class Chart extends Component {
              param = {
                 pincode: location
             }
-
         }
         else {
             const location = this.props.data
-             param = {
+             param = 
+             {
                 location: location
             }
         }
 
         await axios.post('/area/bar-chart', param)
         .then((res) => {
-            if(res.data.type=='current'){
-
+            if(res.data.type=='current')
+            {
                  this.updateChartData(res)
 
             }

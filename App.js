@@ -17,8 +17,7 @@ const setTopLevelNavigator = (_router_el) => {
 
 PushNotification.configure({
   onNotification: function (notification) {
-    const { data } = notification
-    console.log(data)
+    const data  = notification
     if (myrouter) 
     {
       myrouter.navigate("Notify",{data:data})
