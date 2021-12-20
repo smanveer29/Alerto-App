@@ -8,7 +8,9 @@ import PushNotification from "react-native-push-notification";
 import NotificationDetails from './src/Screens/NotificationDetails';
 const Stack = createStackNavigator();
 
-
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
+LogBox.ignoreAllLogs();
 var myrouter = null
 
 const setTopLevelNavigator = (_router_el) => {
@@ -24,7 +26,7 @@ PushNotification.configure({
     } else {
       setTimeout(() => {
         if (myrouter) {
-          myrouter.navigate("Home",{data:data})
+          myrouter.navigate("Home")
         }
       }, 1000)
     }

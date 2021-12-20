@@ -10,7 +10,8 @@ import Colors from '../../Helper/Colors';
 import categories from '../../Helper/CrimeCategory'
 
 
-export default class Camera extends PureComponent {
+export default class Camera extends PureComponent 
+{
   images = []
   location_user = null
   lat = ''
@@ -85,7 +86,6 @@ export default class Camera extends PureComponent {
   }
 
   send = () => {
-
     this.props.loading(true)
     this.uploadImage()
   }
@@ -108,8 +108,8 @@ export default class Camera extends PureComponent {
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index)
             this.title = selectedItem
-            this.setState({ isUploadModal: false })
             this.send()
+            this.setState({ isUploadModal: false })
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             // text represented after item is selected
@@ -205,8 +205,9 @@ const styles = StyleSheet.create({
   },
   card: {
     position: 'absolute',
-    top:70,
+    top:10,
     bottom:0,
+    left:0,right:0,
     backgroundColor: 'black',
     height: "100%",
     width: "100%", // (optional)k

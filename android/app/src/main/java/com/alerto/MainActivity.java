@@ -12,4 +12,13 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "Alerto";
   }
+   @ReactMethod
+    public void addListener(String eventName) {
+
+    }
+
+    @ReactMethod
+    public void removeListeners(Integer count) {
+
+    }
 }

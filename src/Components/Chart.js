@@ -4,6 +4,7 @@ import { Text, StyleSheet, View, Dimensions } from 'react-native'
 import { BarChart } from "react-native-chart-kit";
 import Colors from '../../Helper/Colors';
 import { ActivityIndicator } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 let datachart =
 {
@@ -15,6 +16,7 @@ let datachart =
     ]
 };
 const screenWidth = Dimensions.get("window").width
+const screenHeight = Dimensions.get("window").height/2
 const chartLabels = []
 const chartData = []
 
@@ -44,62 +46,59 @@ export default class Chart extends Component {
         let location = []
         let dataset = []
 
-        for(let item in res.data.list)
-        {
+        for (let item in res.data.list) {
             location.push(item)
-            dataset.push( res.data.list[item].length )
+            dataset.push(res.data.list[item].length)
         }
         datachart.labels = location
         datachart.datasets[0].data = dataset
         this.setState({ isLoading: false })
     }
-    getData = async () => {
-        let param = {}
+    getData = async () => 
+    {
+        var param = {}
         if (this.props.type === 'current') {
             const location = this.props.data
-             param = {
+            param = {
                 pincode: location
             }
         }
         else {
             const location = this.props.data
-             param = 
-             {
+            param =
+            {
                 location: location
             }
         }
-
         await axios.post('/area/bar-chart', param)
-        .then((res) => {
-            if(res.data.type=='current')
-            {
-                 this.updateChartData(res)
-
-            }
-        })
-        .catch((err) => console.log(err))
+            .then((res) => {
+                if (res.data.type == 'current') {
+                    this.updateChartData(res)
+                }
+                else{
+                    this.updateChartData(res)
+                }
+            })
+            .catch((err) => console.log(err))
     }
     render() {
         return (
             <View style={styles.cont}>
                 {this.state.isLoading ? <ActivityIndicator size="large" color="#fff" />
                     :
-                    <>
+                    <View style={{alignItems: "center",justifyContent: 'space-between'}}>
+                        <Text style={styles.label}>Crime Rate</Text>
                         <BarChart
-                            style={{
-                                flex: 1,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}
                             data={datachart}
                             width={screenWidth}
-                            height={320}
-                            yAxisLabel=""
+                            height={300}
+                            yAxisSuffix=""
+                            fromZero
                             chartConfig={chartConfig}
-                            verticalLabelRotation={30}
+                            verticalLabelRotation={0}
+                            showValuesOnTopOfBars
                         />
-                        <Text style={styles.label}>Crime Rate At {this.props.data}</Text>
-                    </>
+                    </View>
                 }
             </View>
         )
@@ -109,14 +108,15 @@ export default class Chart extends Component {
 const styles = StyleSheet.create({
     cont: {
         flex: 1,
-        height: '100%',
         alignItems: 'center',
         justifyContent: 'center'
     },
-    label:{
-        fontSize:16,
-        fontWeight: 'bold',
-        marginBottom:20,
+    label: {
+        fontSize: 22,
         color: 'white',
+        letterSpacing:4,
+        margin:20, 
+        textTransform:'uppercase',
+
     }
 })

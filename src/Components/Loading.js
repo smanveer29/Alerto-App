@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View } from 'react-native'
 import LottieView from 'lottie-react-native';
-import { thisTypeAnnotation } from '@babel/types';
 export default class Loading extends Component {
     props=null
     constructor(props) {
@@ -11,12 +10,14 @@ export default class Loading extends Component {
     render() {
         return (
             <View style={styles.loadingView}>
-            {this.props.type ==='loading' && <LottieView source={require('../Assets/Animation/loader.json')} autoPlay
+            {this.props.type ==='loading' && 
+            <LottieView source={require('../Assets/Animation/loader.json')} autoPlay
                      style={{ zIndex: 99 ,width:'45%',height:'45%',alignItems: 'center', justifyContent: 'center'}}
                 />
             }
 
-            {this.props.type=== 'uploading' && <LottieView source={require('../Assets/Animation/uploading.json')} autoPlay
+            {this.props.type=== 'uploading' && 
+            <LottieView source={require('../Assets/Animation/uploading.json')} autoPlay
                      style={{ zIndex: 99 ,width:'45%',height:'45%',alignItems: 'center', justifyContent: 'center'}}
                 />}
                 

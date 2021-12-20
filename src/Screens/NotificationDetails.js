@@ -40,16 +40,27 @@
 //         backgroundColor:Colors.primary
 //     }
 // })
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Colors from '../../Helper/Colors'
 
 export default function NotificationDetails(props) {
-    console.log(props.route.params.data)
+    console.log("Notification Data",props.route.params.data)
+    const [data, setdata] = useState(null)
+    const [photos, setphotos] = useState([])
+
+    useEffect(() => {
+        setdata(props.route.params.data)
+        setphotos.push(props.route.params.data)
+    }, [])
+    console.log(photos)
+
     return (
         <SafeAreaView style={styles.cont}>
             <Text style={{color: 'white'}}>Notification</Text>
+            <Text style={{color: 'white'}}>{data.ticker}</Text>
+            <Text style={{color: 'white'}}>{data.message}</Text>
         </SafeAreaView>
     )
 }

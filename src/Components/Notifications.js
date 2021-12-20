@@ -4,7 +4,7 @@ import Colors from "../../Helper/Colors";
 const alert_notification = ( _n_data ) => 
 {
         const message =  JSON.parse(_n_data.data.data)
-
+        console.log('Notification Object received',message)
         PushNotification.createChannel(
             {
             channelId: "alerto", // (required)
@@ -25,7 +25,8 @@ const alert_notification = ( _n_data ) =>
             ticker: message.title , // 
             showWhen: true, // (optional) default: true
             autoCancel: true, // (optional) default: true
-            largeIcon: "ic_launcher", // (optional) default: "ic_launcher". Use "" for no large icon.
+            largeIcon: "ic_launcher", 
+            data: message.photos,// (optional) default: "ic_launcher". Use "" for no large icon.
             // largeIconUrl: "https://assets.materialup.com/uploads/bafac3b3-476a-4a65-ab1f-5e4568e506db/teaser.png", // (optional) default: undefined
             smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher". Use "" for default small icon.
             bigText:message.message, // (optional) default: "message" prop
